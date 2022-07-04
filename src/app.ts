@@ -4,12 +4,11 @@ import express from 'express';
 import { resolve } from 'path';
 import 'reflect-metadata';
 import middlewareLoader from './middlewareLoader';
-import modelLoader from './modelLoader';
-import { sequelize } from './modules/core/config/database';
+
+import { mongooseConnect } from './modules/core/config/database';
 import { ResponseService } from './modules/core/service/response.service';
 import ErrorType from './modules/core/type/errorType';
 import controllerLoader from './routeLoader';
-import serviceAccount = require('./yuarsi-8dcd1-firebase-adminsdk-qw8q1-938c7aa166.json');
 
 config({ path: resolve(__dirname, '../../.env') });
 
@@ -35,14 +34,13 @@ class App {
   }
 
   public async listen() {
-    modelLoader(sequelize);
-    
+    await mongooseConnect()
+
     this.app.listen(this.app.get('port'), () => {
-      const node_env = process.env.NODE_ENV;
       console.log(
         `${chalk.green('✓')} server started at http://localhost:${this.app.get(
           'port',
-        )} with ${node_env} environment`,
+        )}`,
       );
     });
   }
