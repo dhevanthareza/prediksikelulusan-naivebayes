@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { UserRepository } from '../../management/user/user.repository';
+// import { UserRepository } from '../../management/user/user.repository';
 import { asyncHandler } from '../helpers/asyncHandler';
 import { ResponseService } from '../service/response.service';
 import ErrorType from '../type/errorType';
@@ -23,10 +23,10 @@ const isAuthenticated = asyncHandler(async (req: AppRequest, res: Response, next
             httpCode: 401,
           });
         } else {
-          delete decoded.iat;
-          const userData = await UserRepository.get(decoded.id);
-          req.user = userData;
-          next();
+          // delete decoded.iat;
+          // const userData = await UserRepository.get(decoded.id);
+          // req.user = userData;
+          // next();
         }
       },
     );
